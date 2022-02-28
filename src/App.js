@@ -5,10 +5,26 @@ import React, {useState} from 'react';
 function App() {
 
 
-  const [state, setState] = useState({
-    w_1:"", 
-    w_2:""
-  }); 
+  //VARIABLE SET
+  const randomWord = "longword".split('')
+  
+  const todaysWordState={}
+
+
+
+  randomWord.forEach((letter, index)=>{
+    if(!todaysWordState[letter]){
+      todaysWordState[`word_${index}`] = "" 
+    }
+    else{
+      return
+    }
+  })
+
+ const inputlist = Object.keys(todaysWordState)
+
+  const [state, setState] = useState(todaysWordState); 
+
 
  function checkWord (event) {
   event.preventDefault()
@@ -24,8 +40,12 @@ function App() {
   return (
     <div className="App">
       <form onSubmit={checkWord}>
-        <input name='w_1' value={state.w_1} onChange={handleInputChange} maxLength ="1"></input>
-        <input name="w_2" value={state.w_2} onChange={handleInputChange} maxLength ="1"></input>
+        {
+          inputlist.map((letter) => (
+            <input key = {letter} name={letter} value={state.letter} onChange={handleInputChange} maxLength ="1"></input>
+          ))
+        }
+
         <button type='submit'>send</button>
       </form>
   
